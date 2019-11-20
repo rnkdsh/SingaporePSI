@@ -89,6 +89,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback {
             isZoomGesturesEnabled = false
         }
         map?.setOnMapLoadedCallback {
+            map?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(1.360968, 103.810796), 10f))
             homeViewModel.regionsLiveData.observe(viewLifecycleOwner, Observer {
                 val bounds = LatLngBounds.builder()
                 val markers = mutableListOf<Marker?>()
