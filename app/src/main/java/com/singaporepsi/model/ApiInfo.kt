@@ -8,4 +8,8 @@ import kotlinx.android.parcel.Parcelize
 data class ApiInfo(
     @SerializedName("status")
     val status: String = ""
-) : Parcelable
+) : Parcelable {
+    fun isHealthy(): Boolean {
+        return status.equals("healthy", ignoreCase = true)
+    }
+}
