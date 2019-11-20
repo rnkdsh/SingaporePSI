@@ -61,7 +61,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata:$rootProject.lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-viewmodel:$rootProject.lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-common-java8:$rootProject.lifecycleVersion"
-    //testImplementation "androidx.arch.core:core-testing:$rootProject.lifecycleVersion"
 
     // Maps
     implementation "com.google.android.gms:play-services-maps:$rootProject.mapsVersion"
@@ -100,8 +99,10 @@ dependencies {
     implementation "com.jakewharton.timber:timber:$rootProject.timberVersion"
     implementation "com.google.code.gson:gson:$rootProject.gsonVersion"
 
-    //testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$rootProject.mockitoVersion"
     testImplementation "junit:junit:$rootProject.junitVersion"
+    testImplementation "com.squareup.okhttp3:mockwebserver:$rootProject.mockWebServerVersion"
+    testImplementation "androidx.arch.core:core-testing:$rootProject.archTestingVersion"
+    testImplementation "org.mockito:mockito-core:$rootProject.mockitoVersion"
 
     androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoVersion"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$rootProject.espressoVersion"

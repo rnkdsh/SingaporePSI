@@ -1,5 +1,6 @@
 package com.singaporepsi
 
+import com.jakewharton.threetenabp.AndroidThreeTen
 import com.singaporepsi.di.DaggerAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
@@ -12,6 +13,7 @@ class MainApplication : DaggerApplication() {
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
+        AndroidThreeTen.init(this)
     }
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
