@@ -2,8 +2,14 @@ package com.singaporepsi.ui.home
 
 import android.os.Bundle
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
 import com.singaporepsi.R
 import com.singaporepsi.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -23,6 +29,24 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), OnMapReadyCallback {
 
     override fun onMapReady(p0: GoogleMap?) {
         map = p0
+        map?.setOnMapLoadedCallback {
+            homeViewModel.regionsLiveData.observe(viewLifecycleOwner, Observer {
+                val bounds = LatLngBounds.builder()
+                val markers = mutableListOf<Marker?>()
+                it.forEach {
+                    bounds.include(it.getLatLng())
+                    markers.add(
+                        map?.addMarker(
+                            MarkerOptions().title(it.name).position(it.getLatLng()).icon(
+                                BitmapDescriptorFactory.defaultMarker()
+                            )
+                        )
+                    )
+                }
+                map?.setLatLngBoundsForCameraTarget(bounds.build())
+                map?.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 50))
+            })
+        }
     }
 
     override fun onResume() {

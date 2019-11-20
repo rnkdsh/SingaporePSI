@@ -1,6 +1,7 @@
 package com.singaporepsi.model
 
 import android.os.Parcelable
+import com.google.android.gms.maps.model.LatLng
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
@@ -10,4 +11,12 @@ data class RegionMetadata(
     val labelLocation: LabelLocation = LabelLocation(),
     @SerializedName("name")
     val name: String = ""
-) : Parcelable
+) : Parcelable {
+    fun getLatLng(): LatLng {
+        return LatLng(labelLocation.latitude, labelLocation.longitude)
+    }
+
+    fun isNational(): Boolean {
+        return name.equals("national", ignoreCase = true)
+    }
+}

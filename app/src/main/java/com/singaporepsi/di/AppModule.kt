@@ -13,6 +13,7 @@ import dagger.Provides
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.aaronhe.threetengson.ThreeTenGsonAdapter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
@@ -80,7 +81,8 @@ class AppModule {
     @Singleton
     @Provides
     fun provideGson(): Gson {
-        return GsonBuilder().create()
+        val builder = GsonBuilder()
+        return ThreeTenGsonAdapter.registerAll(builder).create()
     }
 
     @Singleton
