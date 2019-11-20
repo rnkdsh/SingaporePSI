@@ -10,7 +10,9 @@ data class RegionMetadata(
     @SerializedName("label_location")
     val labelLocation: LabelLocation = LabelLocation(),
     @SerializedName("name")
-    val name: String = ""
+    val name: String = "",
+    @SerializedName("psi")
+    var psi: Int = 0
 ) : Parcelable {
     fun getLatLng(): LatLng {
         return LatLng(labelLocation.latitude, labelLocation.longitude)

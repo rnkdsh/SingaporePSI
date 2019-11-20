@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraintLayoutHome"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -13,5 +14,125 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinatorLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/bottomSheet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/sheet_background"
+            android:backgroundTint="#FFFFFF"
+            android:elevation="@dimen/bottom_sheet_elevation"
+            app:behavior_hideable="true"
+            app:behavior_peekHeight="@dimen/map_bottom_sheet_peek_height"
+            app:layout_behavior=".ui.BottomSheetBehavior">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guide_peek_height"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="@dimen/map_bottom_sheet_peek_height" />
+
+            <!--
+              ~ Bug: When a sheet's height is the same as it's peek height, an upward drag breaks
+              ~ the UI. To avoid this, use a 1px minHeight.
+              ~ Also, we don't use contraintTop_toBottomOf the guideline because that pushes the
+              ~ view down and can leave it partly off screen if the description is long. Instead we
+              ~ use paddingTop to leave room for the header views.
+              -->
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/descriptionScrollview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:minHeight="1px"
+                android:paddingTop="@dimen/map_bottom_sheet_peek_height"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/marker_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/margin_normal"
+                    android:textAlignment="viewStart" />
+            </androidx.core.widget.NestedScrollView>
+
+            <View
+                android:id="@+id/clickable"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="?selectableItemBackground"
+                app:layout_constraintBottom_toBottomOf="@id/guide_peek_height"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/expandIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_normal"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_expand_more"
+                app:layout_constraintBottom_toBottomOf="@id/guide_peek_height"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/marker_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_normal"
+                android:layout_marginEnd="@dimen/margin_normal"
+                app:layout_constraintBottom_toTopOf="@id/marker_subtitle"
+                app:layout_constraintEnd_toStartOf="@id/expandIcon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/bottomSheet"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:text="Sandbox A" />
+
+            <TextView
+                android:id="@+id/marker_subtitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_normal"
+                android:layout_marginEnd="@dimen/margin_normal"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@id/guide_peek_height"
+                app:layout_constraintEnd_toStartOf="@id/expandIcon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/marker_title"
+                tools:text="Accessiblity &amp; Material Design"
+                tools:visibility="visible" />
+
+            <!--
+              ~ Mimics raising the elevation of a container around the header elements (like when an
+              ~ AppBarLayout reaches the collapsed state). We fake this because (a) there is no
+              ~ container view around these views, and (b) the extra elevation shows along the top
+              ~ of the sheet, particularly around the rounded corners, and doesn't look good.
+              -->
+            <View
+                android:id="@+id/sheet_header_shadow"
+                android:layout_width="0dp"
+                android:layout_height="4dp"
+                android:alpha="0"
+                android:background="@drawable/header_shadow"
+                android:stateListAnimator="@animator/active_alpha"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/guide_peek_height" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
