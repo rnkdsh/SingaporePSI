@@ -28,6 +28,7 @@ buildscript {
         ktxVersion = '1.2.0-beta02'
         legacySupportVersion = '1.0.0'
         lifecycleVersion = '2.2.0-rc02'
+        mapsVersion = '17.0.0'
         materialVersion = '1.2.0-alpha02'
         navigationVersion = '2.2.0-rc02'
         okhttpVersion = '4.2.2'
